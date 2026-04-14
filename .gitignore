@@ -1,0 +1,18 @@
+node_modules
+.next
+out
+.env*.local
+.DS_Store
+*.log
+next-env.d.ts
+
+# Local scratch from Figma analysis
+figma-node.json
+figma-flat.json
+figma-images.json
+reviews.json
+inspect.mjs
+inspect2.mjs
+inspect3.mjs
+inspect4.mjs
+download/
