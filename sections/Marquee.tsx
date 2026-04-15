@@ -19,7 +19,7 @@ export function Marquee() {
   return (
     <section
       aria-label="Service highlights"
-      className="relative overflow-hidden border-b border-[#e5e7eb] bg-white py-4 md:py-5"
+      className="relative overflow-hidden border-b border-gray-200 bg-white py-4 md:py-5"
     >
       <div className="mask-fade-x">
         <ul className="flex w-max animate-marquee items-center gap-12 will-change-transform sm:gap-16">
