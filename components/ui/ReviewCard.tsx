@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import { useState } from 'react';
+import Image from 'next/image';
 import { Stars } from './Stars';
 
 export type Review = {
@@ -13,6 +13,8 @@ export type Review = {
   date?: string;
 };
 
+const TRUSTPILOT_URL = 'https://www.trustpilot.com/review/joodlife.com';
+
 function isExternal(src: string) {
   return src.startsWith('http://') || src.startsWith('https://');
 }
@@ -21,24 +23,32 @@ export function ReviewCard({ review }: { review: Review }) {
   const text = review.body ?? review.quote ?? '';
   const rating = review.rating ?? 5;
   return (
-    <article className="flex h-full flex-col justify-between rounded-lg bg-brand-cream px-4 py-6 transition-shadow duration-300 hover:shadow-[0_8px_24px_-12px_rgba(20,46,42,0.18)]">
+    <a
+      href={TRUSTPILOT_URL}
+      target="_blank"
+      rel="noreferrer noopener"
+      aria-label={`Read ${review.name}'s review on Trustpilot`}
+      className="group flex h-full flex-col justify-between rounded-lg bg-brand-cream px-3 py-6 outline-none transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:-translate-y-1 hover:shadow-[0_18px_40px_-20px_rgba(20,46,42,0.35)] focus-visible:ring-2 focus-visible:ring-brand-ink/40"
+    >
       <div className="flex flex-col gap-4">
         <Stars count={rating} />
-        <p className="text-[15px] leading-[24px] text-[#2a2929] line-clamp-6">{text}</p>
+        <p className="line-clamp-6 text-[16.3px] leading-[22px] text-[#2a2929] transition-colors duration-300 group-hover:text-[#142e2a]">
+          {text}
+        </p>
       </div>
       <div className="mt-6 flex items-center gap-4">
         <Avatar image={review.image} initials={review.initials} name={review.name} />
-        <div className="flex flex-col gap-1.5">
-          <p className="text-[15px] font-semibold leading-tight text-brand-ink">{review.name}</p>
-          <div className="flex items-center gap-2 text-xs text-brand-ink/80">
-            <svg viewBox="0 0 14 14" className="h-3 w-3 text-[#00b67a]" fill="currentColor" aria-hidden="true">
+        <div className="flex flex-col gap-2">
+          <p className="text-[16px] font-semibold leading-none text-brand-ink">{review.name}</p>
+          <div className="flex items-center gap-2 text-[12px] leading-[14px] text-brand-ink/80">
+            <svg viewBox="0 0 14 14" className="h-[13px] w-[13px] text-[#00b67a]" fill="currentColor" aria-hidden="true">
               <path d="M5.9 9.6L3.6 7.3l-.9.9 3.2 3.2L13 4.7l-.9-.9z" />
             </svg>
             <span>Verified</span>
           </div>
         </div>
       </div>
-    </article>
+    </a>
   );
 }
 
@@ -47,8 +57,8 @@ function Avatar({ image, initials, name }: { image?: string | null; initials?: s
   if (image && !errored) {
     if (isExternal(image)) {
       return (
-        // External avatars (e.g. Trustpilot CDN) — use plain <img> so we don't
-        // need to enumerate every host in next.config.
+        // External avatars (e.g. Trustpilot CDN) — plain <img> avoids needing
+        // to enumerate every host in next.config.
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={image}
@@ -74,7 +84,7 @@ function Avatar({ image, initials, name }: { image?: string | null; initials?: s
   }
   return (
     <div
-      className="grid h-11 w-11 place-items-center rounded-full bg-brand-mint text-base font-medium text-brand-ink"
+      className="grid h-11 w-11 place-items-center rounded-full bg-brand-mint text-[16px] font-medium text-brand-ink"
       aria-hidden="true"
     >
       {initials || name.slice(0, 2).toUpperCase()}

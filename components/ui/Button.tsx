@@ -15,11 +15,13 @@ type ButtonProps = CommonProps & React.ButtonHTMLAttributes<HTMLButtonElement> &
 type LinkProps = CommonProps & { href: string } & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>;
 
 const baseClasses =
-  'inline-flex select-none items-center justify-center gap-2 rounded-lg px-12 py-[15px] text-base font-medium leading-5 transition-all duration-200 ease-out active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent disabled:cursor-not-allowed disabled:opacity-60';
+  'inline-flex h-[50px] w-full select-none items-center justify-center rounded-lg px-[50px] text-[16.3px] font-medium leading-[19.5px] tracking-[-0.02em] transition-all duration-[250ms] ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent disabled:cursor-not-allowed disabled:opacity-60';
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-white text-brand-ink shadow-sm hover:bg-white/95 hover:shadow-md',
-  ghost: 'border border-white/80 text-white hover:bg-white/15 hover:border-white',
+  primary:
+    'border border-[#0c2421]/90 bg-white text-[#142f2b] shadow-[0_1px_2px_rgba(20,46,42,0.08)] hover:-translate-y-[1px] hover:shadow-[0_6px_18px_-6px_rgba(20,46,42,0.35)]',
+  ghost:
+    'border border-white text-white hover:bg-white/10 hover:-translate-y-[1px] hover:shadow-[0_6px_18px_-6px_rgba(255,255,255,0.2)]',
 };
 
 export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps | LinkProps>(
