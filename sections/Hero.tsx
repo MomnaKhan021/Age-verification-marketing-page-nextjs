@@ -1,12 +1,32 @@
 'use client';
 
 import Image from 'next/image';
+import { useCallback, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Logo } from '@/components/ui/Logo';
 import { useAgeVerification } from '@/contexts/AgeVerificationContext';
 
+const REDIRECT_URL = 'https://joodlife.com';
+
 export function Hero() {
-  const { verify, deny } = useAgeVerification();
+  const { verify } = useAgeVerification();
+  const [blocked, setBlocked] = useState(false);
+  const [pending, setPending] = useState(false);
+
+  const onYes = useCallback(() => {
+    setPending(true);
+    try {
+      verify(REDIRECT_URL);
+    } catch (err) {
+      console.error('[hero] verify failed:', err);
+      setPending(false);
+    }
+  }, [verify]);
+
+  const onNo = useCallback(() => {
+    // Under-18 → do NOT proceed. Surface a blocking banner in-place.
+    setBlocked(true);
+  }, []);
 
   return (
     <section className="bg-white px-3 pt-[10px] pb-0 md:px-5 md:pt-5 md:pb-[23px]">
@@ -30,23 +50,47 @@ export function Hero() {
 
           <div className="flex w-full max-w-[720px] flex-col items-center gap-[26px] text-center md:gap-10">
             <div className="flex flex-col items-center gap-[18px] md:gap-6">
-              <h1 className="font-display text-[40px] font-semibold leading-[46px] tracking-[-0.027em] text-white md:text-[60px] md:leading-[68px]">
+              {/* Explicit `not-italic` guards against any italic fallback */}
+              <h1 className="font-display text-[40px] font-semibold not-italic leading-[46px] tracking-[-0.027em] text-white md:text-[60px] md:leading-[68px]">
                 Age Verification
               </h1>
-              <p className="max-w-[496px] text-[15px] leading-[22px] text-brand-sage md:text-[16.3px] md:leading-[19.5px]">
+              <p className="max-w-[496px] text-[15px] not-italic leading-[22px] text-brand-sage md:text-[16.3px] md:leading-[19.5px]">
                 You must be 18 years old to access this website. Please verify your age.
               </p>
             </div>
 
-            {/* Buttons: stacked on mobile (Figma mobile), row on md+ (Figma 1:795 desktop) */}
-            <div className="flex w-full max-w-[305px] flex-col gap-3 md:w-auto md:max-w-none md:flex-row md:gap-3">
-              <Button variant="primary" onClick={() => verify()} aria-label="I am 18 or older">
-                Yes, I&rsquo;m over 18
-              </Button>
-              <Button variant="ghost" onClick={() => deny()} aria-label="I am under 18">
-                No I&rsquo;m not
-              </Button>
-            </div>
+            {blocked ? (
+              <div
+                role="alert"
+                aria-live="assertive"
+                className="w-full max-w-[520px] rounded-lg border border-white/25 bg-white/10 px-5 py-4 text-white backdrop-blur-sm"
+              >
+                <p className="text-[15px] font-medium leading-[22px]">Access denied</p>
+                <p className="mt-1 text-[14px] leading-[20px] text-brand-sage">
+                  This website is intended for adults aged 18 or over. You cannot continue.
+                </p>
+              </div>
+            ) : (
+              /* Buttons: stacked on mobile, row on md+ (Figma node 1:795) */
+              <div className="flex w-full max-w-[305px] flex-col gap-3 md:w-auto md:max-w-none md:flex-row md:gap-3">
+                <Button
+                  variant="primary"
+                  onClick={onYes}
+                  disabled={pending}
+                  aria-label="I am 18 or older — continue to joodlife.com"
+                >
+                  {pending ? 'Redirecting…' : 'Yes, I\u2019m over 18'}
+                </Button>
+                <Button
+                  variant="ghost"
+                  onClick={onNo}
+                  disabled={pending}
+                  aria-label="I am under 18"
+                >
+                  No I&rsquo;m not
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>

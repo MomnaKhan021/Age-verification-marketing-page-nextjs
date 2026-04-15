@@ -10,8 +10,8 @@ type ContextValue = {
   status: Status;
   verifiedAt: string | null;
   /**
-   * Marks the user as verified.
-   * @param redirectTo - optional URL to navigate to after verification.
+   * Marks the user as verified and optionally redirects. Errors from
+   * localStorage or navigation are caught so the UI never gets stuck.
    */
   verify: (redirectTo?: string) => void;
   deny: () => void;
@@ -31,11 +31,13 @@ export function AgeVerificationProvider({ children }: { children: React.ReactNod
       const raw = window.localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw) as { status: Status; verifiedAt: string | null };
-        setStatus(parsed.status);
-        setVerifiedAt(parsed.verifiedAt);
+        if (parsed && (parsed.status === 'verified' || parsed.status === 'denied')) {
+          setStatus(parsed.status);
+          setVerifiedAt(parsed.verifiedAt ?? null);
+        }
       }
-    } catch {
-      /* localStorage unavailable */
+    } catch (err) {
+      console.warn('[age-verification] could not read localStorage:', err);
     }
     setReady(true);
   }, []);
@@ -46,8 +48,9 @@ export function AgeVerificationProvider({ children }: { children: React.ReactNod
     setVerifiedAt(ts);
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ status: next, verifiedAt: ts }));
-    } catch {
-      /* ignore */
+    } catch (err) {
+      // Private mode / quota / disabled — state still lives in React memory.
+      console.warn('[age-verification] could not write localStorage:', err);
     }
   }, []);
 
@@ -58,15 +61,16 @@ export function AgeVerificationProvider({ children }: { children: React.ReactNod
       verifiedAt,
       verify: (redirectTo?: string) => {
         persist('verified');
-        if (redirectTo && typeof window !== 'undefined') {
-          // Skip redirect when we're already on the target host (avoids reload loops during QA).
+        if (!redirectTo || typeof window === 'undefined') return;
+        try {
+          window.location.assign(redirectTo);
+        } catch (err) {
+          // Some browsers throw if navigation is blocked (e.g. sandboxed iframes).
+          console.error('[age-verification] redirect failed:', err);
           try {
-            const target = new URL(redirectTo);
-            if (target.host !== window.location.host) {
-              window.location.assign(redirectTo);
-            }
-          } catch {
-            window.location.assign(redirectTo);
+            window.location.href = redirectTo;
+          } catch (err2) {
+            console.error('[age-verification] fallback navigation failed:', err2);
           }
         }
       },
