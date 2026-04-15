@@ -34,12 +34,12 @@ const config: Config = {
         '2xl': '24px',
       },
       animation: {
-        marquee: 'marquee 40s linear infinite',
+        marquee: 'marquee 35s linear infinite',
       },
       keyframes: {
         marquee: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
+          '0%': { transform: 'translate3d(0, 0, 0)' },
+          '100%': { transform: 'translate3d(-50%, 0, 0)' },
         },
       },
     },

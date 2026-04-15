@@ -2,15 +2,16 @@ node_modules
 .next
 out
 .env*.local
+!.env.local.example
 .DS_Store
 *.log
 next-env.d.ts
+.claude/settings.local.json
 
 # Local scratch from Figma analysis
 figma-node.json
 figma-flat.json
 figma-images.json
-reviews.json
 inspect.mjs
 inspect2.mjs
 inspect3.mjs

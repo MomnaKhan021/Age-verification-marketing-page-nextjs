@@ -26,10 +26,13 @@ const items: USPItem[] = [
 export function USPBar() {
   return (
     <section className="bg-white py-8 md:py-[30px]">
-      <div className="mx-auto max-w-[1440px] px-5 md:px-20">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-0 md:divide-x md:divide-[#d9d9d9]">
+      <div className="mx-auto max-w-[1440px] px-5 md:px-12 lg:px-20">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-[#d9d9d9]">
           {items.map((item, i) => (
-            <div key={item.title + i} className="md:px-4 lg:px-6 first:md:pl-0 last:md:pr-0">
+            <div
+              key={item.title + i}
+              className="lg:px-4 first:lg:pl-0 last:lg:pr-0 xl:px-6"
+            >
               <USPCard item={item} />
             </div>
           ))}

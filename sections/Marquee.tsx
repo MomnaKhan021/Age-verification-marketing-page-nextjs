@@ -11,22 +11,23 @@ const items: Item[] = [
 ];
 
 export function Marquee() {
-  const loop = [...items, ...items, ...items];
   return (
-    <section className="overflow-hidden border-y border-[#ececec] bg-white py-4">
+    <section
+      aria-label="Service highlights"
+      className="overflow-hidden border-y border-[#ececec] bg-white py-4 motion-reduce:animate-none"
+    >
       <div className="mask-fade-x">
-        <ul className="flex w-max animate-marquee items-center gap-16">
-          {loop.map((item, i) => (
+        <ul className="flex w-max animate-marquee items-center gap-16 motion-reduce:animate-none">
+          {[...items, ...items].map((item, i) => (
             <li
               key={i}
               className="flex shrink-0 items-center gap-3 whitespace-nowrap text-brand-ink"
+              aria-hidden={i >= items.length}
             >
               <span className="text-brand-navy">
-                <USPIcon name={item.icon} className="h-8 w-8" />
+                <USPIcon name={item.icon} className="h-7 w-7" />
               </span>
-              <span className="text-base font-medium leading-5 text-[#3d3838]">
-                {item.label}
-              </span>
+              <span className="text-base font-medium leading-5 text-[#3d3838]">{item.label}</span>
             </li>
           ))}
         </ul>
