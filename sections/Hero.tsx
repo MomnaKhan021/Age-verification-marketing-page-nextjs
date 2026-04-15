@@ -6,7 +6,7 @@ import { Logo } from '@/components/ui/Logo';
 import { useAgeVerification } from '@/contexts/AgeVerificationContext';
 
 export function Hero() {
-  const { verify, deny, status } = useAgeVerification();
+  const { verify, deny } = useAgeVerification();
 
   return (
     <section className="bg-white px-3 pt-[10px] pb-0 md:px-5 md:pt-5 md:pb-[23px]">
@@ -36,21 +36,14 @@ export function Hero() {
               <p className="max-w-[496px] text-[15px] leading-[22px] text-brand-sage md:text-[16.3px] md:leading-[19.5px]">
                 You must be 18 years old to access this website. Please verify your age.
               </p>
-              {status !== 'unknown' && (
-                <p
-                  className="rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium text-white ring-1 ring-white/20 backdrop-blur"
-                  role="status"
-                >
-                  {status === 'verified' ? 'Thanks — age verified.' : 'Sorry, this site is for users 18+.'}
-                </p>
-              )}
             </div>
 
-            <div className="flex w-full max-w-[305px] flex-col gap-[26px]">
-              <Button variant="primary" onClick={verify} aria-label="I am 18 or older">
+            {/* Buttons: stacked on mobile (Figma mobile), row on md+ (Figma 1:795 desktop) */}
+            <div className="flex w-full max-w-[305px] flex-col gap-3 md:w-auto md:max-w-none md:flex-row md:gap-3">
+              <Button variant="primary" onClick={() => verify()} aria-label="I am 18 or older">
                 Yes, I&rsquo;m over 18
               </Button>
-              <Button variant="ghost" onClick={deny} aria-label="I am under 18">
+              <Button variant="ghost" onClick={() => deny()} aria-label="I am under 18">
                 No I&rsquo;m not
               </Button>
             </div>

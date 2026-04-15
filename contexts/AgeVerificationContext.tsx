@@ -5,9 +5,15 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 type Status = 'unknown' | 'verified' | 'denied';
 
 type ContextValue = {
+  /** Hydrated value from storage. `true` once we have read localStorage. */
+  ready: boolean;
   status: Status;
   verifiedAt: string | null;
-  verify: () => void;
+  /**
+   * Marks the user as verified.
+   * @param redirectTo - optional URL to navigate to after verification.
+   */
+  verify: (redirectTo?: string) => void;
   deny: () => void;
   reset: () => void;
 };
@@ -18,17 +24,20 @@ const Ctx = createContext<ContextValue | null>(null);
 export function AgeVerificationProvider({ children }: { children: React.ReactNode }) {
   const [status, setStatus] = useState<Status>('unknown');
   const [verifiedAt, setVerifiedAt] = useState<string | null>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (!raw) return;
-      const parsed = JSON.parse(raw) as { status: Status; verifiedAt: string | null };
-      setStatus(parsed.status);
-      setVerifiedAt(parsed.verifiedAt);
+      if (raw) {
+        const parsed = JSON.parse(raw) as { status: Status; verifiedAt: string | null };
+        setStatus(parsed.status);
+        setVerifiedAt(parsed.verifiedAt);
+      }
     } catch {
       /* localStorage unavailable */
     }
+    setReady(true);
   }, []);
 
   const persist = useCallback((next: Status) => {
@@ -44,13 +53,27 @@ export function AgeVerificationProvider({ children }: { children: React.ReactNod
 
   const value = useMemo<ContextValue>(
     () => ({
+      ready,
       status,
       verifiedAt,
-      verify: () => persist('verified'),
+      verify: (redirectTo?: string) => {
+        persist('verified');
+        if (redirectTo && typeof window !== 'undefined') {
+          // Skip redirect when we're already on the target host (avoids reload loops during QA).
+          try {
+            const target = new URL(redirectTo);
+            if (target.host !== window.location.host) {
+              window.location.assign(redirectTo);
+            }
+          } catch {
+            window.location.assign(redirectTo);
+          }
+        }
+      },
       deny: () => persist('denied'),
       reset: () => persist('unknown'),
     }),
-    [status, verifiedAt, persist],
+    [ready, status, verifiedAt, persist],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

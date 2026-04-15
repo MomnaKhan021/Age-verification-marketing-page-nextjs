@@ -15,7 +15,7 @@ type ButtonProps = CommonProps & React.ButtonHTMLAttributes<HTMLButtonElement> &
 type LinkProps = CommonProps & { href: string } & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>;
 
 const baseClasses =
-  'inline-flex h-[50px] w-full select-none items-center justify-center rounded-lg px-[50px] text-[16.3px] font-medium leading-[19.5px] tracking-[-0.02em] transition-all duration-[250ms] ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent disabled:cursor-not-allowed disabled:opacity-60';
+  'inline-flex h-[50px] select-none items-center justify-center whitespace-nowrap rounded-lg px-[32px] text-[16.3px] font-medium leading-[19.5px] tracking-[-0.02em] transition-all duration-[250ms] ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent disabled:cursor-not-allowed disabled:opacity-60 sm:px-[50px]';
 
 const variants: Record<Variant, string> = {
   primary:

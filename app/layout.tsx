@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Bricolage_Grotesque, DM_Sans } from 'next/font/google';
+import { AgeVerificationModal } from '@/components/ui/AgeVerificationModal';
 import { AgeVerificationProvider } from '@/contexts/AgeVerificationContext';
 import './globals.css';
 
@@ -30,7 +31,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preload" as="image" href="/images/hero.jpg" fetchPriority="high" />
       </head>
       <body className="bg-white font-sans text-brand-ink antialiased">
-        <AgeVerificationProvider>{children}</AgeVerificationProvider>
+        <AgeVerificationProvider>
+          {children}
+          <AgeVerificationModal />
+        </AgeVerificationProvider>
       </body>
     </html>
   );
