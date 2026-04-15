@@ -59,15 +59,7 @@ export function AgeVerificationProvider({ children }: { children: React.ReactNod
       verify: (redirectTo?: string) => {
         persist('verified');
         if (redirectTo && typeof window !== 'undefined') {
-          // Skip redirect when we're already on the target host (avoids reload loops during QA).
-          try {
-            const target = new URL(redirectTo);
-            if (target.host !== window.location.host) {
-              window.location.assign(redirectTo);
-            }
-          } catch {
-            window.location.assign(redirectTo);
-          }
+          window.location.assign(redirectTo);
         }
       },
       deny: () => persist('denied'),
