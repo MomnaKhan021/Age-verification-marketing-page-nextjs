@@ -1,0 +1,88 @@
+{
+  "source": "seeded",
+  "fetchedAt": null,
+  "rating": 4.4,
+  "totalReviews": 50,
+  "reviews": [
+    {
+      "id": "seed-1",
+      "name": "Hayley Churchyard",
+      "initials": "HC",
+      "image": null,
+      "rating": 5,
+      "title": "Always reliable",
+      "body": "My medication always arrives well packaged and promptly and I don\u2019t have to answer hundreds of questions to receive it",
+      "date": "2025-08-12"
+    },
+    {
+      "id": "seed-2",
+      "name": "Gillian Rhodes",
+      "initials": "GR",
+      "image": "/images/gillian.jpg",
+      "rating": 5,
+      "title": "Brilliant company",
+      "body": "Always helpful and understanding. I did find it difficult to order at first but soon got the hang of it I am a bit of a dianasor when it comes to technology!! Brilliant company ordered then collect from the post office.",
+      "date": "2025-09-03"
+    },
+    {
+      "id": "seed-3",
+      "name": "Jacqueline Riley",
+      "initials": "JR",
+      "image": null,
+      "rating": 5,
+      "title": "Fantastic experience",
+      "body": "I\u2019ve had a fantastic experience with Jood life, quick service, support on hand 24/7, reasonable prices and no pressure to constantly buy injections",
+      "date": "2025-09-21"
+    },
+    {
+      "id": "seed-4",
+      "name": "Mike",
+      "initials": "MI",
+      "image": null,
+      "rating": 5,
+      "title": "Life-changing",
+      "body": "For me personally it\u2019s perfect. I started at 161kg (25st plus) I\u2019m currently at 122kg (19.2st) I\u2019m 9 months in to a 2 year program. My life has changed completely, my health is loads better.",
+      "date": "2025-10-04"
+    },
+    {
+      "id": "seed-5",
+      "name": "Sarah Whitcombe",
+      "initials": "SW",
+      "image": null,
+      "rating": 5,
+      "title": "Friendly support",
+      "body": "Honestly the support team are incredible \u2014 they reply on WhatsApp within minutes and never make you feel rushed.",
+      "date": "2025-11-15"
+    },
+    {
+      "id": "seed-6",
+      "name": "David Patel",
+      "initials": "DP",
+      "image": null,
+      "rating": 5,
+      "title": "Discreet delivery",
+      "body": "Free, plain packaging delivery is a huge plus. Easy reorder process, never had a hiccup in 6 months.",
+      "date": "2025-12-02"
+    },
+    {
+      "id": "seed-7",
+      "name": "Emma Lawson",
+      "initials": "EL",
+      "image": null,
+      "rating": 5,
+      "title": "Genuinely caring",
+      "body": "What I appreciate most is the genuinely caring approach. The clinicians take time to answer questions and adjust treatment based on how I\u2019m feeling.",
+      "date": "2026-01-18"
+    },
+    {
+      "id": "seed-8",
+      "name": "Tom Henderson",
+      "initials": "TH",
+      "image": null,
+      "rating": 5,
+      "title": "Trusted, knowledgeable",
+      "body": "Down 14kg in four months with no side-effects worth mentioning. The team know exactly what they\u2019re doing \u2014 worth every penny compared to the alternatives.",
+      "date": "2026-02-09"
+    }
+  ]
+}
