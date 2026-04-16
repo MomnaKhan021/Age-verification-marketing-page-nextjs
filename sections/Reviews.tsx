@@ -16,7 +16,8 @@ export function Reviews() {
         <div className="flex flex-col items-center gap-3 text-center">
           <TrustpilotBadge rating={data.rating} totalReviews={data.totalReviews} />
           <h2 className="font-display text-[28px] font-semibold leading-9 tracking-[-0.031em] text-brand-ink sm:text-[32px] md:text-[40px] md:leading-[46px]">
-            3000+ happy customers
+            <span className="not-italic">3000+ happy </span>
+            <span className="font-serif italic font-medium">customers</span>
           </h2>
           <p className="max-w-[780px] text-[15px] leading-[22px] text-brand-ink md:text-[16.3px] md:leading-[19.5px]">
             Thousands have trusted Jood for safe, clinically guided weight-loss care. Our patients

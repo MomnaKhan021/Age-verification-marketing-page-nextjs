@@ -7,7 +7,7 @@ import { Logo } from '@/components/ui/Logo';
 
 const STORAGE_KEY = 'jood:age-verification';
 const REDIRECT_URL = 'https://joodlife.com';
-const DENIED_RESET_MS = 2000;
+const DENIED_RESET_MS = 1000;
 
 export function Hero() {
   const [denied, setDenied] = useState(false);
@@ -68,46 +68,52 @@ export function Hero() {
               </p>
             </div>
 
-            {/* Cross-fade between button row and denial banner */}
-            <div className="relative w-full max-w-[520px]">
-              <div
-                style={{
-                  transition: 'opacity 300ms cubic-bezier(0.22,1,0.36,1), transform 300ms cubic-bezier(0.22,1,0.36,1)',
-                  opacity: denied ? 0 : 1,
-                  transform: denied ? 'translateY(4px)' : 'translateY(0)',
-                  pointerEvents: denied ? 'none' : 'auto',
-                }}
-              >
-                <div className="mx-auto flex w-full max-w-[305px] flex-col gap-3 md:w-auto md:max-w-none md:flex-row md:gap-3">
-                  <Button
-                    variant="primary"
-                    onClick={onYes}
-                    aria-label="I am 18 or older — continue to joodlife.com"
-                  >
-                    Yes, I am 18+
-                  </Button>
-                  <Button variant="ghost" onClick={onNo} aria-label="I am under 18">
-                    No, I&rsquo;m not
-                  </Button>
+            {/* Cross-fade between button row and denial banner — always
+                centered, regardless of child width, via flex wrapper. */}
+            <div className="relative flex w-full justify-center">
+              <div className="relative w-full max-w-[520px]">
+                <div
+                  style={{
+                    transition:
+                      'opacity 300ms cubic-bezier(0.22,1,0.36,1), transform 300ms cubic-bezier(0.22,1,0.36,1)',
+                    opacity: denied ? 0 : 1,
+                    transform: denied ? 'translateY(4px)' : 'translateY(0)',
+                    pointerEvents: denied ? 'none' : 'auto',
+                  }}
+                  className="flex justify-center"
+                >
+                  <div className="flex w-full max-w-[305px] flex-col gap-3 md:w-auto md:max-w-none md:flex-row md:gap-3">
+                    <Button
+                      variant="primary"
+                      onClick={onYes}
+                      aria-label="I am 18 or older — continue to joodlife.com"
+                    >
+                      Yes, I am 18+
+                    </Button>
+                    <Button variant="ghost" onClick={onNo} aria-label="I am under 18">
+                      No, I&rsquo;m not
+                    </Button>
+                  </div>
                 </div>
-              </div>
 
-              <div
-                role="alert"
-                aria-live="assertive"
-                aria-hidden={!denied}
-                style={{
-                  transition: 'opacity 300ms cubic-bezier(0.22,1,0.36,1), transform 300ms cubic-bezier(0.22,1,0.36,1)',
-                  opacity: denied ? 1 : 0,
-                  transform: denied ? 'translateY(0)' : 'translateY(-4px)',
-                  pointerEvents: denied ? 'auto' : 'none',
-                }}
-                className="absolute inset-x-0 top-0 mx-auto w-full max-w-[520px] rounded-lg border border-white/25 bg-white/10 px-5 py-4 text-white backdrop-blur-sm"
-              >
-                <p className="text-[15px] font-medium leading-[22px]">Access denied</p>
-                <p className="mt-1 text-[14px] leading-[20px] text-brand-sage">
-                  This website is intended for adults aged 18 or over. You cannot continue.
-                </p>
+                <div
+                  role="alert"
+                  aria-live="assertive"
+                  aria-hidden={!denied}
+                  style={{
+                    transition:
+                      'opacity 300ms cubic-bezier(0.22,1,0.36,1), transform 300ms cubic-bezier(0.22,1,0.36,1)',
+                    opacity: denied ? 1 : 0,
+                    transform: denied ? 'translateY(0)' : 'translateY(-4px)',
+                    pointerEvents: denied ? 'auto' : 'none',
+                  }}
+                  className="absolute inset-x-0 top-0 mx-auto w-full max-w-[520px] rounded-lg border border-white/25 bg-white/10 px-5 py-4 text-white backdrop-blur-sm"
+                >
+                  <p className="text-[15px] font-medium leading-[22px]">Access denied</p>
+                  <p className="mt-1 text-[14px] leading-[20px] text-brand-sage">
+                    This website is intended for adults aged 18 or over. You cannot continue.
+                  </p>
+                </div>
               </div>
             </div>
           </div>

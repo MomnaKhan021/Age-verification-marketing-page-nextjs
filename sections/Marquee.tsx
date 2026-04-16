@@ -11,28 +11,35 @@ const items: Item[] = [
 ];
 
 /**
- * Continuous marquee. Never pauses. Seamless loop via 2× duplicated items.
- * - No top border (per design).
- * - Subtle bottom divider in design-system grey to separate from Reviews.
+ * Continuous horizontal marquee.
+ * - Never pauses.
+ * - 2× duplicated with an explicit margin-right on every item (including
+ *   the last of each cycle) so the seam between cycles has the same gap
+ *   as between siblings — no visual jitter at the wrap point.
+ * - Icon + label pairs are each a flex item with fixed inner gap for
+ *   perfectly consistent rhythm.
  */
 export function Marquee() {
+  const track = [...items, ...items];
+  const ITEM_GAP = 'mr-14 md:mr-16'; // 56px / 64px, applied uniformly
+
   return (
     <section
       aria-label="Service highlights"
       className="relative overflow-hidden border-b border-gray-200 bg-white py-4 md:py-5"
     >
       <div className="mask-fade-x">
-        <ul className="flex w-max animate-marquee items-center gap-12 will-change-transform sm:gap-16">
-          {[...items, ...items].map((item, i) => (
+        <ul className="flex w-max animate-marquee items-center will-change-transform">
+          {track.map((item, i) => (
             <li
               key={i}
-              className="flex shrink-0 items-center gap-3 whitespace-nowrap"
+              className={`flex shrink-0 items-center gap-3 whitespace-nowrap ${ITEM_GAP}`}
               aria-hidden={i >= items.length}
             >
-              <span className="text-brand-navy">
-                <USPIcon name={item.icon} className="h-6 w-6 sm:h-7 sm:w-7" />
+              <span className="text-brand-navy" aria-hidden="true">
+                <USPIcon name={item.icon} className="h-6 w-6 md:h-7 md:w-7" />
               </span>
-              <span className="text-[15px] font-medium leading-[21px] text-[#142e2a] sm:text-[16px]">
+              <span className="text-[15px] font-medium leading-[21px] text-[#142e2a] md:text-[16px]">
                 {item.label}
               </span>
             </li>
