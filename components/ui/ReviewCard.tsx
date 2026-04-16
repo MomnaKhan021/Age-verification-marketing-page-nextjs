@@ -2,15 +2,22 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Stars } from './Stars';
 
+/**
+ * Review is deliberately permissive about nulls because the scraper's
+ * JSON payload mirrors Trustpilot's API which returns null for any
+ * missing field. TypeScript infers those nulls when we import the
+ * static `data/reviews.json`, so the type has to accept them.
+ */
 export type Review = {
-  id?: string;
+  id?: string | null;
   name: string;
-  quote?: string;
-  body?: string;
-  initials?: string;
+  quote?: string | null;
+  body?: string | null;
+  initials?: string | null;
   image?: string | null;
-  rating?: number;
-  date?: string;
+  rating?: number | null;
+  title?: string | null;
+  date?: string | null;
 };
 
 const TRUSTPILOT_URL = 'https://www.trustpilot.com/review/joodlife.com';
@@ -20,8 +27,9 @@ function isExternal(src: string) {
 }
 
 export function ReviewCard({ review }: { review: Review }) {
-  const text = review.body ?? review.quote ?? '';
+  const text = (review.body ?? review.quote ?? '') as string;
   const rating = review.rating ?? 5;
+  const initials = review.initials ?? undefined;
   return (
     <a
       href={TRUSTPILOT_URL}
@@ -37,7 +45,7 @@ export function ReviewCard({ review }: { review: Review }) {
         </p>
       </div>
       <div className="mt-6 flex items-center gap-4">
-        <Avatar image={review.image} initials={review.initials} name={review.name} />
+        <Avatar image={review.image} initials={initials} name={review.name} />
         <div className="flex flex-col gap-2">
           <p className="text-[16px] font-semibold leading-none text-brand-ink">{review.name}</p>
           <div className="flex items-center gap-2 text-[12px] leading-[14px] text-brand-ink/80">

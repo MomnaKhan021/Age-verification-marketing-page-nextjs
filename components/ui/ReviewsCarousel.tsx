@@ -65,7 +65,7 @@ export function ReviewsCarousel({ reviews }: Props) {
                   aria-hidden={p !== page}
                 >
                   {slice.map((r) => (
-                    <ReviewCard key={r.id ?? r.name} review={r} />
+                    <ReviewCard key={(r.id ?? r.name) as string} review={r} />
                   ))}
                 </div>
               </li>
