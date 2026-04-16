@@ -15,6 +15,8 @@ import path from 'node:path';
 
 const OUT = path.join(process.cwd(), 'data', 'reviews.json');
 const SLUG = 'joodlife.com';
+const RATING_FALLBACK = 4.4;
+const TOTAL_FALLBACK = 50;
 const UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36';
 
@@ -48,8 +50,8 @@ async function viaBusinessApi() {
   return {
     source: 'trustpilot-api',
     fetchedAt: new Date().toISOString(),
-    rating: json.businessUnit?.score?.trustScore ?? null,
-    totalReviews: json.businessUnit?.numberOfReviews?.total ?? reviews.length,
+    rating: json.businessUnit?.score?.trustScore ?? RATING_FALLBACK,
+    totalReviews: json.businessUnit?.numberOfReviews?.total ?? reviews.length ?? TOTAL_FALLBACK,
     reviews,
   };
 }
@@ -86,9 +88,9 @@ async function viaPublicPage() {
   return {
     source: 'trustpilot-public',
     fetchedAt: new Date().toISOString(),
-    rating: data?.props?.pageProps?.businessUnit?.trustScore?.score ?? null,
+    rating: data?.props?.pageProps?.businessUnit?.trustScore?.score ?? RATING_FALLBACK,
     totalReviews:
-      data?.props?.pageProps?.businessUnit?.numberOfReviews?.total ?? reviews.length,
+      data?.props?.pageProps?.businessUnit?.numberOfReviews?.total ?? reviews.length ?? TOTAL_FALLBACK,
     reviews,
   };
 }

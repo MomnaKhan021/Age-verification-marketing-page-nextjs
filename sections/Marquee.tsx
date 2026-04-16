@@ -11,17 +11,13 @@ const items: Item[] = [
 ];
 
 /**
- * Continuous horizontal marquee.
- * - Never pauses.
- * - 2× duplicated with an explicit margin-right on every item (including
- *   the last of each cycle) so the seam between cycles has the same gap
- *   as between siblings — no visual jitter at the wrap point.
- * - Icon + label pairs are each a flex item with fixed inner gap for
- *   perfectly consistent rhythm.
+ * Continuous horizontal marquee, Figma-spec (Component 139):
+ *  - 32×32 icons in brand navy
+ *  - 16px / 21px DM Sans label at brand-ink
+ *  - uniform 56px/64px margin between items; seamless 2× loop
  */
 export function Marquee() {
   const track = [...items, ...items];
-  const ITEM_GAP = 'mr-14 md:mr-16'; // 56px / 64px, applied uniformly
 
   return (
     <section
@@ -33,12 +29,10 @@ export function Marquee() {
           {track.map((item, i) => (
             <li
               key={i}
-              className={`flex shrink-0 items-center gap-3 whitespace-nowrap ${ITEM_GAP}`}
+              className="mr-14 flex shrink-0 items-center gap-3 whitespace-nowrap md:mr-16"
               aria-hidden={i >= items.length}
             >
-              <span className="text-brand-navy" aria-hidden="true">
-                <USPIcon name={item.icon} className="h-6 w-6 md:h-7 md:w-7" />
-              </span>
+              <USPIcon name={item.icon} className="h-7 w-7 text-brand-navy md:h-8 md:w-8" />
               <span className="text-[15px] font-medium leading-[21px] text-[#142e2a] md:text-[16px]">
                 {item.label}
               </span>
