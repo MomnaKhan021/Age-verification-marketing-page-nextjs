@@ -24,6 +24,15 @@ const config: Config = {
       fontFamily: {
         display: ['var(--font-display)', 'Gilroy', 'ui-sans-serif', 'system-ui'],
         sans: ['var(--font-sans)', 'DM Sans', 'ui-sans-serif', 'system-ui'],
+        serif: [
+          'ITC Clearface Std',
+          'var(--font-serif)',
+          'Playfair Display',
+          'Georgia',
+          'Cambria',
+          'Times New Roman',
+          'serif',
+        ],
       },
       fontSize: {
         'hero': ['60px', { lineHeight: '68px', letterSpacing: '-0.027em' }],

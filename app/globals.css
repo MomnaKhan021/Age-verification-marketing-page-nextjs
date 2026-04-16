@@ -16,17 +16,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Never inherit italic from any fallback / user-agent stylesheet. */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-span,
-button,
-a {
+/* Never inherit italic from a fallback webfont — but leave .italic
+   utility free to opt in when the design explicitly calls for it. */
+h1:not(.italic),
+h2:not(.italic),
+h3:not(.italic),
+h4:not(.italic),
+h5:not(.italic),
+h6:not(.italic),
+p:not(.italic),
+button:not(.italic),
+a:not(.italic) {
   font-style: normal;
 }
 

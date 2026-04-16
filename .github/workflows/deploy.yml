@@ -1,0 +1,57 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [main, figma-integration]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  vercel:
+    name: Deploy to Vercel
+    runs-on: ubuntu-latest
+    if: ${{ vars.DEPLOY_TARGET == 'vercel' || vars.DEPLOY_TARGET == '' }}
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Install Vercel CLI
+        run: npm i -g vercel@latest
+      - name: Pull Vercel environment
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+  static-export:
+    name: Static export (for IONOS Deploy Now / any static host)
+    runs-on: ubuntu-latest
+    if: ${{ vars.DEPLOY_TARGET == 'static' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Build static export
+        run: npm run build
+        env:
+          NEXT_PUBLIC_STATIC_EXPORT: '1'
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: out
+          path: out/
+          if-no-files-found: error
+          retention-days: 7
