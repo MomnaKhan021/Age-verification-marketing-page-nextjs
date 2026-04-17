@@ -1,6 +1,6 @@
 # Age-verification-marketing-page-nextjs
-#Age Verification Marketing Page (Next.js)
-#Overview
+Age Verification Marketing Page (Next.js)
+Overview
 
 This project is a modern marketing website built using Next.js, focused on implementing an age-verification flow with a clean and responsive user interface. The application is designed based on Figma layouts and optimized for performance, scalability, and deployment.
 
