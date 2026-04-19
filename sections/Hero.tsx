@@ -88,10 +88,10 @@ export function Hero() {
                       onClick={onYes}
                       aria-label="I am 18 or older — continue to joodlife.com"
                     >
-                      Yes, I am 18+
+                      YES, I&rsquo;M OVER 18
                     </Button>
                     <Button variant="ghost" onClick={onNo} aria-label="I am under 18">
-                      No, I&rsquo;m not
+                      NO I&rsquo;M NOT
                     </Button>
                   </div>
                 </div>

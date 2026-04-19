@@ -3,11 +3,10 @@ import { USPIcon, type USPIconName } from '@/components/ui/USPIcon';
 type Item = { icon: USPIconName; label: string };
 
 const items: Item[] = [
-  { icon: 'clinicians', label: 'UK Licensed medication' },
   { icon: 'support', label: '24-Hour WhatsApp support' },
   { icon: 'delivery', label: 'Free next-day delivery' },
-  { icon: 'time', label: 'Cancel anytime subscription' },
-  { icon: 'support', label: 'Ongoing medical support' },
+  { icon: 'time', label: 'Cancel anytime' },
+  { icon: 'support', label: 'On going support' },
 ];
 
 /**
@@ -32,8 +31,8 @@ export function Marquee() {
               className="mr-14 flex shrink-0 items-center gap-3 whitespace-nowrap md:mr-16"
               aria-hidden={i >= items.length}
             >
-              <USPIcon name={item.icon} className="h-7 w-7 text-brand-navy md:h-8 md:w-8" />
-              <span className="text-[15px] font-medium leading-[21px] text-[#142e2a] md:text-[16px]">
+              <USPIcon name={item.icon} className="h-7 w-7 text-brand-ink md:h-8 md:w-8" />
+              <span className="text-[15px] font-medium leading-[21px] text-brand-ink md:text-[16px]">
                 {item.label}
               </span>
             </li>

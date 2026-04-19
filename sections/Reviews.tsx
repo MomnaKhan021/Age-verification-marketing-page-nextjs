@@ -27,10 +27,12 @@ export function Reviews() {
       <div className="mx-auto flex max-w-[1440px] flex-col gap-8 px-4 md:gap-10 md:px-[60px]">
         <div className="flex flex-col items-center gap-3 text-center">
           <TrustpilotBadge rating={rating} totalReviews={totalReviews} />
-          <h2 className="font-display text-[28px] font-semibold leading-9 tracking-[-0.031em] text-brand-ink sm:text-[32px] md:text-[40px] md:leading-[46px]">
-            <span className="not-italic">3000+ happy </span>
-            <span className="font-serif italic font-medium">customers</span>
-          </h2>
+          <div className="w-full">
+            <h2 className="font-display text-[28px] font-semibold leading-9 tracking-[-0.031em] text-brand-ink sm:text-[32px] md:text-[40px] md:leading-[46px] pb-3 border-b border-gray-200">
+              <span className="not-italic">3000+ happy </span>
+              <span className="font-serif italic font-medium">customers</span>
+            </h2>
+          </div>
           <p className="max-w-[780px] text-[15px] leading-[22px] text-brand-ink md:text-[16.3px] md:leading-[19.5px]">
             Thousands have trusted Jood for safe, clinically guided weight-loss care. Our patients
             value the expert support, clear communication, and lasting results that make every
