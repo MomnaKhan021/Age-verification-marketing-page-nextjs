@@ -40,7 +40,7 @@ export function ReviewCard({ review }: { review: Review }) {
     >
       <div className="flex flex-col gap-4">
         <Stars count={rating} />
-        <p className="line-clamp-6 text-[16.3px] leading-[22px] text-[#2a2929] transition-colors duration-300 group-hover:text-[#142e2a]">
+        <p className="line-clamp-6 text-[16.3px] leading-[22px] text-[#2a2929] transition-colors duration-300 group-hover:text-[#142e2a] after:mt-4 after:block after:h-px after:w-[123px] after:bg-[#142E2A] after:content-['']">
           {text}
         </p>
       </div>

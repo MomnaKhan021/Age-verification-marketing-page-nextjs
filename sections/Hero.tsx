@@ -63,7 +63,7 @@ export function Hero() {
                 <span className="not-italic">Age </span>
                 <span className="font-serif italic font-medium">Verification</span>
               </h1>
-              <p className="max-w-[496px] text-[15px] not-italic leading-[22px] text-brand-sage md:text-[16.3px] md:leading-[19.5px]">
+              <p className="max-w-[496px] text-[15px] not-italic leading-[22px] text-brand-sage md:max-w-none md:whitespace-nowrap md:text-[16.3px] md:leading-[19.5px]">
                 You must be 18 years old to access this website. Please verify your age.
               </p>
             </div>

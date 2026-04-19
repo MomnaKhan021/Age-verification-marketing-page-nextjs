@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --font-display: 'DM Sans', system-ui, -apple-system, sans-serif;
-  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
-}
-
 html,
 body {
   background: #ffffff;
@@ -34,5 +29,32 @@ a:not(.italic) {
   .mask-fade-x {
     mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
     -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  }
+}
+
+/* Marquee — explicit fallback keyframes that survive any Tailwind purge
+   or SSR hydration quirks. Duplicated-track pattern: translate by -50%
+   of the full duplicated width (= exactly one track width). */
+@keyframes joodMarquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee {
+  animation: joodMarquee 35s linear infinite;
+  animation-play-state: running;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
   }
 }

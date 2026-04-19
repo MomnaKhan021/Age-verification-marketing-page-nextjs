@@ -42,7 +42,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${dmSans.variable} ${display.variable} ${serif.variable}`}>
       <head>
-        <link rel="preload" as="image" href="/images/hero.jpg" fetchPriority="high" />
+        {/* Hero image is preloaded automatically by next/image `priority` on the
+            Image component (generates a responsive preload with imageSrcSet).
+            A manual <link rel="preload"> here would be a redundant duplicate. */}
         {/* Google Tag Manager */}
         <Script
           id="gtm-init"
