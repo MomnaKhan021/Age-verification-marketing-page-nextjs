@@ -32,10 +32,13 @@ a:not(.italic) {
   }
 }
 
-/* Marquee — explicit fallback keyframes that survive any Tailwind purge
-   or SSR hydration quirks. Duplicated-track pattern: translate by -50%
-   of the full duplicated width (= exactly one track width). */
-@keyframes joodMarquee {
+/* Marquee — explicit keyframes + flex primitives that survive any
+   Tailwind purge or SSR hydration quirks. Duplicated-track pattern:
+   translate the row by -50% of its own width (= exactly one track)
+   for a seamless loop. Defined here in globals.css (not a component
+   <style> tag) because server-component <style> tags render empty
+   in the final HTML payload under the App Router. */
+@keyframes joodMarqueeScroll {
   from {
     transform: translate3d(0, 0, 0);
   }
@@ -44,17 +47,27 @@ a:not(.italic) {
   }
 }
 
-.animate-marquee {
-  animation: joodMarquee 35s linear infinite;
-  animation-play-state: running;
+.jood-marquee {
+  display: flex;
+  width: -moz-max-content;
+  width: max-content;
+  align-items: center;
+  will-change: transform;
+  animation: joodMarqueeScroll 35s linear infinite;
 }
 
-.animate-marquee:hover {
+.jood-marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.jood-marquee:hover {
   animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
+  .jood-marquee {
     animation: none;
   }
 }

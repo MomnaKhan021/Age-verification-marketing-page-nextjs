@@ -21,28 +21,6 @@ export function Marquee() {
       aria-label="Service highlights"
       className="relative overflow-hidden border-b border-gray-200 bg-white py-4 md:py-5"
     >
-      <style>{`
-        @keyframes joodMarqueeScroll {
-          0% { transform: translate3d(0, 0, 0); }
-          100% { transform: translate3d(-50%, 0, 0); }
-        }
-        .jood-marquee {
-          display: flex;
-          width: max-content;
-          align-items: center;
-          will-change: transform;
-          animation: joodMarqueeScroll 35s linear infinite;
-        }
-        .jood-marquee:hover { animation-play-state: paused; }
-        @media (prefers-reduced-motion: reduce) {
-          .jood-marquee { animation: none; }
-        }
-        .jood-marquee-track {
-          display: flex;
-          flex-shrink: 0;
-          align-items: center;
-        }
-      `}</style>
       <div className="mask-fade-x">
         <div className="jood-marquee">
           <MarqueeTrack />
