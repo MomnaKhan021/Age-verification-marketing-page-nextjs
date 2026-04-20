@@ -40,9 +40,18 @@ export function ReviewCard({ review }: { review: Review }) {
     >
       <div className="flex flex-col gap-4">
         <Stars count={rating} />
-        <p className="line-clamp-6 text-[16.3px] leading-[22px] text-[#2a2929] transition-colors duration-300 group-hover:text-[#142e2a] after:mt-4 after:block after:h-px after:w-[123px] after:bg-[#142E2A] after:content-['']">
+        <p className="line-clamp-6 text-[16.3px] leading-[22px] text-[#2a2929] transition-colors duration-300 group-hover:text-[#142e2a]">
           {text}
         </p>
+        <span
+          aria-hidden="true"
+          style={{
+            display: 'block',
+            width: '123px',
+            height: '1px',
+            backgroundColor: '#142E2A',
+          }}
+        />
       </div>
       <div className="mt-6 flex items-center gap-4">
         <Avatar image={review.image} initials={initials} name={review.name} />

@@ -10,9 +10,10 @@ const items: Item[] = [
 ];
 
 /**
- * Continuous horizontal marquee, Figma-spec (Component 139).
- * Two identical tracks slide left by exactly 100% of one track width —
- * seamless loop regardless of content length.
+ * Continuous horizontal marquee. Two identical tracks slide by exactly
+ * one track width for a seamless loop. The @keyframes + class rules
+ * live in a component-scoped <style> tag so the animation is guaranteed
+ * to ship regardless of CSS cascade or Tailwind purge behaviour.
  */
 export function Marquee() {
   return (
@@ -20,8 +21,30 @@ export function Marquee() {
       aria-label="Service highlights"
       className="relative overflow-hidden border-b border-gray-200 bg-white py-4 md:py-5"
     >
+      <style>{`
+        @keyframes joodMarqueeScroll {
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
+        }
+        .jood-marquee {
+          display: flex;
+          width: max-content;
+          align-items: center;
+          will-change: transform;
+          animation: joodMarqueeScroll 35s linear infinite;
+        }
+        .jood-marquee:hover { animation-play-state: paused; }
+        @media (prefers-reduced-motion: reduce) {
+          .jood-marquee { animation: none; }
+        }
+        .jood-marquee-track {
+          display: flex;
+          flex-shrink: 0;
+          align-items: center;
+        }
+      `}</style>
       <div className="mask-fade-x">
-        <div className="flex w-max animate-marquee items-center will-change-transform">
+        <div className="jood-marquee">
           <MarqueeTrack />
           <MarqueeTrack ariaHidden />
         </div>
@@ -33,7 +56,7 @@ export function Marquee() {
 function MarqueeTrack({ ariaHidden = false }: { ariaHidden?: boolean }) {
   return (
     <ul
-      className="flex shrink-0 items-center"
+      className="jood-marquee-track"
       aria-hidden={ariaHidden}
       role={ariaHidden ? 'presentation' : 'list'}
     >
