@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import { Bricolage_Grotesque, DM_Sans, Playfair_Display } from 'next/font/google';
 import Script from 'next/script';
-import { AgeVerificationModal } from '@/components/ui/AgeVerificationModal';
-import { AgeVerificationProvider } from '@/contexts/AgeVerificationContext';
 import './globals.css';
 
 const dmSans = DM_Sans({
@@ -78,10 +76,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           />
         </noscript>
         {/* End Google Tag Manager (noscript) */}
-        <AgeVerificationProvider>
-          {children}
-          <AgeVerificationModal />
-        </AgeVerificationProvider>
+        {children}
       </body>
     </html>
   );
