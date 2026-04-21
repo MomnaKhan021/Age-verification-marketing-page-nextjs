@@ -45,6 +45,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Hero image is preloaded automatically by next/image `priority` on the
             Image component (generates a responsive preload with imageSrcSet).
             A manual <link rel="preload"> here would be a redundant duplicate. */}
+
+        {/* Speed up the joodlife.com hop for every user who clicks "Yes, I'm
+            over 18" — ALL redirects to joodlife.com are plain <a> tags with
+            browser-native navigation (no script-based window.location). */}
+        <link rel="dns-prefetch" href="https://joodlife.com" />
+        <link rel="preconnect" href="https://joodlife.com" crossOrigin="anonymous" />
+        <link rel="prefetch" href="https://joodlife.com" as="document" />
+
         {/* Google Tag Manager */}
         <Script
           id="gtm-init"

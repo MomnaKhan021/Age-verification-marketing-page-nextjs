@@ -19,6 +19,10 @@ export function Hero() {
     return () => window.clearTimeout(t);
   }, [denied]);
 
+  // onYes only persists the verification flag. The actual navigation
+  // is performed by the browser via the <a href="..."> anchor so we
+  // can leverage the <link rel="prefetch"> hint in <head>. Never call
+  // window.location.assign from JS — this stays purely declarative.
   const onYes = useCallback(() => {
     try {
       window.localStorage.setItem(
@@ -26,13 +30,7 @@ export function Hero() {
         JSON.stringify({ status: 'verified', verifiedAt: new Date().toISOString() }),
       );
     } catch (err) {
-      // Private mode / quota — fall through to redirect regardless.
       console.warn('[hero] localStorage write failed:', err);
-    }
-    try {
-      window.location.assign(REDIRECT_URL);
-    } catch {
-      window.location.href = REDIRECT_URL;
     }
   }, []);
 
@@ -85,6 +83,7 @@ export function Hero() {
                   <div className="flex w-full max-w-[305px] flex-col gap-3 md:w-auto md:max-w-none md:flex-row md:gap-3">
                     <Button
                       variant="primary"
+                      href={REDIRECT_URL}
                       onClick={onYes}
                       aria-label="I am 18 or older — continue to joodlife.com"
                     >

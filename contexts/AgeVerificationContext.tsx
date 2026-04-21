@@ -10,10 +10,12 @@ type ContextValue = {
   status: Status;
   verifiedAt: string | null;
   /**
-   * Marks the user as verified and optionally redirects. Errors from
-   * localStorage or navigation are caught so the UI never gets stuck.
+   * Marks the user as verified in localStorage. Does NOT perform a
+   * redirect — navigation to joodlife.com is handled declaratively by
+   * <a href="..."> anchor tags (see Hero.tsx / AgeVerificationModal.tsx)
+   * so the browser can leverage the <link rel="prefetch"> hint in head.
    */
-  verify: (redirectTo?: string) => void;
+  verify: () => void;
   deny: () => void;
   reset: () => void;
 };
@@ -59,20 +61,10 @@ export function AgeVerificationProvider({ children }: { children: React.ReactNod
       ready,
       status,
       verifiedAt,
-      verify: (redirectTo?: string) => {
+      verify: () => {
+        // Persist only — navigation is performed by the anchor tag that
+        // invoked this callback. Never call window.location from here.
         persist('verified');
-        if (!redirectTo || typeof window === 'undefined') return;
-        try {
-          window.location.assign(redirectTo);
-        } catch (err) {
-          // Some browsers throw if navigation is blocked (e.g. sandboxed iframes).
-          console.error('[age-verification] redirect failed:', err);
-          try {
-            window.location.href = redirectTo;
-          } catch (err2) {
-            console.error('[age-verification] fallback navigation failed:', err2);
-          }
-        }
       },
       deny: () => persist('denied'),
       reset: () => persist('unknown'),

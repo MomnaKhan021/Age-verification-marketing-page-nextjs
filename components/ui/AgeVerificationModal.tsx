@@ -18,7 +18,10 @@ const REDIRECT_URL = 'https://joodlife.com';
 export function AgeVerificationModal() {
   const { ready, status, verify } = useAgeVerification();
   const [denied, setDenied] = useState(false);
-  const yesRef = useRef<HTMLButtonElement>(null);
+  // The "Yes" control is an <a> anchor (not a button) so the browser
+  // performs a declarative navigation that can use <link rel="prefetch">
+  // hints from layout.tsx. We only need an HTMLAnchorElement ref here.
+  const yesRef = useRef<HTMLAnchorElement>(null);
   const noRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const titleId = 'age-gate-title';
@@ -73,8 +76,11 @@ export function AgeVerificationModal() {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [shouldShow]);
 
+  // Persist "verified" to localStorage, then let the <a href="..."> do
+  // the actual navigation. No window.location.assign — that would
+  // bypass the browser's prefetch hints.
   const onYes = useCallback(() => {
-    verify(REDIRECT_URL);
+    verify();
   }, [verify]);
 
   const onNo = useCallback(() => {
@@ -129,14 +135,15 @@ export function AgeVerificationModal() {
           )}
 
           <div className="flex w-full flex-col gap-3 sm:max-w-[360px] sm:flex-row sm:gap-3">
-            <button
+            <a
               ref={yesRef}
-              type="button"
+              href={REDIRECT_URL}
               onClick={onYes}
+              aria-label="I am 18 or older — continue to joodlife.com"
               className="inline-flex h-[50px] flex-1 select-none items-center justify-center whitespace-nowrap rounded-lg border border-brand-ink bg-brand-ink px-6 text-[15px] font-medium tracking-[-0.02em] text-white shadow-sm transition-all duration-[250ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[1px] hover:shadow-md active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-ink/60 focus-visible:ring-offset-2"
             >
               Yes, I&rsquo;m over 18
-            </button>
+            </a>
             <button
               ref={noRef}
               type="button"

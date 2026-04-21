@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { forwardRef } from 'react';
 
 type Variant = 'primary' | 'ghost';
@@ -24,6 +23,12 @@ const variants: Record<Variant, string> = {
     'border border-white text-white hover:bg-white/10 hover:-translate-y-[1px] hover:shadow-[0_6px_18px_-6px_rgba(255,255,255,0.2)]',
 };
 
+/**
+ * When `href` is provided, renders a plain <a> (anchor) tag — NOT a
+ * next/link. Navigation to external domains like joodlife.com must go
+ * through a native anchor so the browser performs a real top-level
+ * document navigation (with all the prefetch hints in <head> applying).
+ */
 export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps | LinkProps>(
   (props, ref) => {
     const { variant = 'primary', className = '', children, ...rest } = props as CommonProps & {
@@ -33,14 +38,14 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
     if ('href' in rest && rest.href) {
       const { href, ...anchorRest } = rest as { href: string };
       return (
-        <Link
+        <a
           href={href}
           ref={ref as React.Ref<HTMLAnchorElement>}
           className={cls}
           {...(anchorRest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
         >
           {children}
-        </Link>
+        </a>
       );
     }
     return (
